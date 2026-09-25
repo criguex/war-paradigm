@@ -43,4 +43,5 @@ jobs:
         with:
           name: playwright-report-02-mutants
           path: experiments/02-mutants/playwright-report
+          if-no-files-found: ignore
           retention-days: 14

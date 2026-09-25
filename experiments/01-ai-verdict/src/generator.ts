@@ -50,6 +50,8 @@ export class CommandGenerator implements Generator {
         if (code !== 0) return reject(new Error(`generator exited with code ${code}`));
         try { resolve(JSON.parse(out)); } catch { reject(new Error(`generator did not return JSON: ${out.slice(0, 200)}`)); }
       });
+      // a generator that exits without reading stdin closes the pipe early (EPIPE); the exit code decides, not the pipe
+      child.stdin.on('error', () => {});
       child.stdin.end(JSON.stringify(story));
     });
   }
