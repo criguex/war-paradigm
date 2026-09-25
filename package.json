@@ -1,0 +1,33 @@
+{
+  "name": "mutant-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "THE MUTANT LAB · I test what AI builds. Runnable experiments in AI-era QA.",
+  "type": "module",
+  "workspaces": [
+    "experiments/01-ai-verdict",
+    "experiments/02-mutants",
+    "experiments/03-second-brain"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces",
+    "test:01": "npm test -w experiments/01-ai-verdict",
+    "test:02": "npm test -w experiments/02-mutants",
+    "test:03": "npm test -w experiments/03-second-brain",
+    "demo:01": "npm run demo -w experiments/01-ai-verdict",
+    "demo:02": "npm run test:mutants -w experiments/02-mutants",
+    "demo:03": "npm run demo -w experiments/03-second-brain",
+    "typecheck": "tsc -p experiments/01-ai-verdict && tsc -p experiments/02-mutants"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "author": "Cristian Guerra <criguex@gmail.com>",
+  "license": "MIT"
+}

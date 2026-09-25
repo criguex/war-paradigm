@@ -1,0 +1,46 @@
+name: lab
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  experiments:
+    name: run every experiment
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: "Experiment #01 · AI verdict"
+        run: npm run test:01
+
+      - name: "Experiment #02 · mutant scenarios"
+        run: npm run test:02
+
+      - name: "Experiment #03 · second brain (hook + vault)"
+        run: npm run test:03
+
+      - name: Upload Playwright report (experiment 02)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-02-mutants
+          path: experiments/02-mutants/playwright-report
+          retention-days: 14

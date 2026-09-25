@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DocFlow</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">D</span> DocFlow</div>
+    <div id="user-chip" class="user-chip" hidden>
+      <span id="me-name"></span>
+      <span id="me-role" class="badge" data-testid="me-role"></span>
+      <button id="signout" class="btn btn-ghost" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <main id="login-view" class="center">
+    <form id="login-form" class="card login-card">
+      <h1>Sign in</h1>
+      <p class="muted">Content workflow · draft → approved → published</p>
+      <label>Email <input id="email" name="email" type="email" autocomplete="username" required /></label>
+      <label>Password <input id="password" name="password" type="password" autocomplete="current-password" required /></label>
+      <button class="btn btn-primary" type="submit">Sign in</button>
+      <p id="login-error" class="error" role="alert" hidden></p>
+    </form>
+  </main>
+
+  <main id="app-view" hidden>
+    <nav class="tabs" role="tablist">
+      <button class="tab is-active" role="tab" data-tab="docs" aria-selected="true">Documents</button>
+      <button class="tab" role="tab" data-tab="members" aria-selected="false">Members</button>
+    </nav>
+
+    <section id="tab-docs" class="panel" role="tabpanel">
+      <form id="doc-form" class="card row">
+        <label>Title <input id="title" name="title" placeholder="Q4 launch plan" /></label>
+        <label>Owner <input id="owner" name="owner" placeholder="editor@demo.io" /></label>
+        <button class="btn btn-primary" type="submit">Create</button>
+      </form>
+      <table class="card table">
+        <thead><tr><th>Title</th><th>Owner</th><th>Status</th><th class="right">Actions</th></tr></thead>
+        <tbody id="docs-body"></tbody>
+      </table>
+    </section>
+
+    <section id="tab-members" class="panel" role="tabpanel" hidden>
+      <table class="card table">
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th class="right">Actions</th></tr></thead>
+        <tbody id="members-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>

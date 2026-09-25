@@ -1,0 +1,24 @@
+{
+  "id": "US-42",
+  "title": "Approve and publish a document",
+  "roles": ["viewer", "editor", "approver", "admin"],
+  "permissions": {
+    "create": { "allowed": ["editor", "approver", "admin"], "ok": 201 },
+    "approve": { "allowed": ["approver", "admin"], "ok": 200 },
+    "publish": { "allowed": ["editor", "approver", "admin"], "ok": 200 }
+  },
+  "requirements": [
+    { "id": "R-1", "priority": "must", "text": "An editor can create a draft with a title (3-80 characters) and an owner" },
+    { "id": "R-2", "priority": "must", "text": "Only approvers and admins can approve a draft; anyone else gets 403" },
+    { "id": "R-3", "priority": "must", "text": "A document can be published only after it is approved; otherwise 409" },
+    { "id": "R-4", "priority": "must", "text": "Viewers cannot publish (403)" },
+    { "id": "R-5", "priority": "should", "text": "An expired session is rejected with 401 on any step" },
+    { "id": "R-6", "priority": "should", "text": "A draft without an owner is rejected with 422" }
+  ],
+  "boundaries": [
+    { "id": "B-1", "text": "title with 2 characters is rejected (422)" },
+    { "id": "B-2", "text": "title with 3 characters is accepted (201)" },
+    { "id": "B-3", "text": "title with 80 characters is accepted (201)" },
+    { "id": "B-4", "text": "title with 81 characters is rejected (422)" }
+  ]
+}

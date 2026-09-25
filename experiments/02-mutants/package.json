@@ -1,0 +1,20 @@
+{
+  "name": "@mutant-lab/02-mutants",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment #02 — a green Playwright suite vs. mutant scenarios on one golden flow",
+  "type": "module",
+  "scripts": {
+    "app": "node app/server.js",
+    "test": "playwright test",
+    "test:golden": "playwright test golden",
+    "test:mutants": "playwright test mutants",
+    "test:strict": "MUTANT_LAB_STRICT=1 playwright test mutants",
+    "evidence": "playwright test --config=playwright.evidence.config.ts",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.0.0"
+  }
+}

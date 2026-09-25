@@ -1,0 +1,30 @@
+{
+  "story": "US-42",
+  "meta": { "model": "planner-agent", "temperature": 1, "promptVersion": "latest", "traceId": "tr_unpin_0001" },
+  "scenarios": [
+    { "id": "S-1", "title": "Editor creates a draft", "actor": "editor", "action": "create", "covers": ["R-1"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with title 'Q4 launch plan' and owner editor@demo.io"], "expected": { "status": 201 } },
+    { "id": "S-2", "title": "Approver approves the draft", "actor": "approver", "action": "approve", "covers": ["R-2"], "source": "US-42/R-2",
+      "steps": ["Editor creates a draft", "Sign in as approver", "POST /api/docs/:id/approve"], "expected": { "status": 200 } },
+    { "id": "S-3", "title": "Viewer is not allowed to approve", "actor": "viewer", "action": "approve", "covers": ["R-2"], "source": "US-42/R-2",
+      "steps": ["Editor creates a draft", "Sign in as viewer", "POST /api/docs/:id/approve"], "expected": { "status": 403 } },
+    { "id": "S-4", "title": "Editor publishes once approved", "actor": "editor", "action": "publish", "covers": ["R-3"], "source": "US-42/R-3",
+      "steps": ["Editor creates a draft", "Approver approves it", "Sign in as editor", "POST /api/docs/:id/publish"], "expected": { "status": 200 } },
+    { "id": "S-5", "title": "Publish without approval is a conflict", "actor": "editor", "action": "publish", "covers": ["R-3"], "source": "US-42/R-3",
+      "steps": ["Editor creates a draft", "POST /api/docs/:id/publish while status is draft"], "expected": { "status": 409 } },
+    { "id": "S-6", "title": "Viewer is not allowed to publish", "actor": "viewer", "action": "publish", "covers": ["R-4"], "source": "US-42/R-4",
+      "steps": ["Editor creates a draft and approver approves it", "Sign in as viewer", "POST /api/docs/:id/publish"], "expected": { "status": 403 } },
+    { "id": "S-7", "title": "Expired token is rejected", "actor": "approver", "action": "approve", "covers": ["R-5"], "source": "US-42/R-5",
+      "steps": ["Sign in as approver with ttl=0", "POST /api/docs/:id/approve"], "expected": { "status": 401 } },
+    { "id": "S-8", "title": "Owner is required to create a draft", "actor": "editor", "action": "create", "covers": ["R-6"], "source": "US-42/R-6",
+      "steps": ["Sign in as editor", "POST /api/docs with a title and no owner"], "expected": { "status": 422 } },
+    { "id": "S-9", "title": "Title of 2 characters is rejected", "actor": "editor", "action": "create", "covers": ["R-1", "B-1"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with title 'ab'"], "expected": { "status": 422 } },
+    { "id": "S-10", "title": "Title of 3 characters is accepted", "actor": "editor", "action": "create", "covers": ["R-1", "B-2"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with title 'abc'"], "expected": { "status": 201 } },
+    { "id": "S-11", "title": "Title of 81 characters is rejected", "actor": "editor", "action": "create", "covers": ["R-1", "B-4"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with an 81-character title"], "expected": { "status": 422 } }
+  ],
+  "risks": ["In-memory state: every test must reset the app first"],
+  "assumptions": ["A single approval is enough to publish"]
+}

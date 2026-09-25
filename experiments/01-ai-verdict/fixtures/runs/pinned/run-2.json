@@ -1,0 +1,35 @@
+{
+  "story": "US-42",
+  "meta": { "model": "planner-agent@2026.06", "temperature": 0, "promptVersion": "test-plan@v3", "traceId": "tr_pin_0002" },
+  "scenarios": [
+    { "id": "S-1", "title": "Create a draft as editor", "actor": "editor", "action": "create", "covers": ["R-1"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with title 'Q4 launch plan' and owner editor@demo.io", "Response body has status 'draft'"], "expected": { "status": 201 } },
+    { "id": "S-2", "title": "Approve a draft as approver", "actor": "approver", "action": "approve", "covers": ["R-2"], "source": "US-42/R-2",
+      "steps": ["Editor creates a draft", "Sign in as approver", "POST /api/docs/:id/approve"], "expected": { "status": 200 } },
+    { "id": "S-3", "title": "Approve a draft as viewer is forbidden", "actor": "viewer", "action": "approve", "covers": ["R-2"], "source": "US-42/R-2",
+      "steps": ["Editor creates a draft", "Sign in as viewer", "POST /api/docs/:id/approve"], "expected": { "status": 403 } },
+    { "id": "S-4", "title": "Publish an approved document as editor", "actor": "editor", "action": "publish", "covers": ["R-3"], "source": "US-42/R-3",
+      "steps": ["Editor creates a draft", "Approver approves it", "Sign in as editor", "POST /api/docs/:id/publish"], "expected": { "status": 200 } },
+    { "id": "S-5", "title": "Publish before approval is a conflict", "actor": "editor", "action": "publish", "covers": ["R-3"], "source": "US-42/R-3",
+      "steps": ["Editor creates a draft", "POST /api/docs/:id/publish while status is draft"], "expected": { "status": 409 } },
+    { "id": "S-6", "title": "Publish as viewer is forbidden", "actor": "viewer", "action": "publish", "covers": ["R-4"], "source": "US-42/R-4",
+      "steps": ["Editor creates a draft and approver approves it", "Sign in as viewer", "POST /api/docs/:id/publish"], "expected": { "status": 403 } },
+    { "id": "S-7", "title": "Approve with an expired session", "actor": "approver", "action": "approve", "covers": ["R-5"], "source": "US-42/R-5",
+      "steps": ["Sign in as approver with ttl=0", "POST /api/docs/:id/approve"], "expected": { "status": 401 } },
+    { "id": "S-8", "title": "Create a draft without owner", "actor": "editor", "action": "create", "covers": ["R-6"], "source": "US-42/R-6",
+      "steps": ["Sign in as editor", "POST /api/docs with a title and no owner"], "expected": { "status": 422 } },
+    { "id": "S-9", "title": "Title at the lower bound (2 chars) is rejected", "actor": "editor", "action": "create", "covers": ["R-1", "B-1"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with title 'ab'"], "expected": { "status": 422 } },
+    { "id": "S-10", "title": "Title at the lower bound (3 chars) is accepted", "actor": "editor", "action": "create", "covers": ["R-1", "B-2"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with title 'abc'"], "expected": { "status": 201 } },
+    { "id": "S-11", "title": "Title at the upper bound (80 chars) is accepted", "actor": "editor", "action": "create", "covers": ["R-1", "B-3"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with an 80-character title"], "expected": { "status": 201 } },
+    { "id": "S-12", "title": "Title over the upper bound (81 chars) is rejected", "actor": "editor", "action": "create", "covers": ["R-1", "B-4"], "source": "US-42/R-1",
+      "steps": ["Sign in as editor", "POST /api/docs with an 81-character title"], "expected": { "status": 422 } }
+  ],
+  "risks": [
+    "Approval state lives in memory; restarting the app loses drafts",
+    "Role changes are not covered by this story and may interact with approval"
+  ],
+  "assumptions": []
+}

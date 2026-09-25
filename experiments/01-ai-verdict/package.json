@@ -1,0 +1,20 @@
+{
+  "name": "@mutant-lab/01-ai-verdict",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Experiment #01 — AI output changes every run. Your verdict can't.",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "demo": "tsx src/cli.ts",
+    "demo:pinned": "tsx src/cli.ts --set pinned",
+    "demo:unpinned": "tsx src/cli.ts --set unpinned",
+    "demo:live": "tsx src/cli.ts --live"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}
