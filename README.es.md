@@ -6,7 +6,7 @@
   <a href="https://github.com/criguex/war-paradigm/actions/workflows/ci.yml"><img src="https://github.com/criguex/war-paradigm/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/Playwright-1.63-2EAD33?logo=playwright&logoColor=white" alt="Playwright 1.63">
   <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/licencia-MIT-5FD4E6" alt="MIT">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licencia-GPL--3.0-5FD4E6" alt="GPL-3.0"></a>
 </p>
 
 # WAR Paradigm
@@ -99,9 +99,33 @@ war-paradigm/
 
 Los comandos de cada experimento están en el README de su carpeta. Atajos en la raíz: `npm run test:01`, `test:02`, `test:03`, `demo:01`, `demo:02`, `demo:03`, `typecheck`.
 
+## Servicios comerciales
+
+El código es abierto. Lo que vendo es la experiencia de aplicarlo en sistemas reales y complejos:
+
+- **Consultoría especializada.** Una auditoría WAR Paradigm de tus suites de pruebas, oráculos, simulaciones o evaluadores de IA, con un informe de lo que tus pruebas no están viendo y cómo cerrar cada brecha.
+- **Soporte técnico.** Acompañamiento a empresas que adoptan el marco: puesta en marcha en tu CI, tus flujos y la forma de trabajar de tu equipo.
+- **Integraciones y mejoras a la medida.** Adaptadores para tu stack, catálogos de mutantes para tu dominio, oráculos para tus simulaciones y funcionalidades hechas para lo que necesitas.
+
+Escríbeme en [linkedin.com/in/criguex](https://www.linkedin.com/in/criguex) o a criguex@gmail.com.
+
+## Licencia
+
+WAR Paradigm es software libre publicado bajo la [Licencia Pública General de GNU v3.0 o posterior](LICENSE) (`GPL-3.0-or-later`). Copyright © 2026 Cristian Guerra.
+
+Qué exige la GPL, en palabras simples. El texto de [LICENSE](LICENSE) es el que manda; este resumen no es asesoría legal.
+
+- **Puedes** usar, estudiar, modificar y compartir el código, gratis o con fines comerciales.
+- **Si lo distribuyes**, tal cual o modificado, o entregas un producto que incluya su código, debes:
+  - ofrecer el código fuente completo de esa versión bajo la misma licencia;
+  - conservar los avisos de copyright, el texto de la licencia y la línea `SPDX-License-Identifier` al inicio de cada archivo;
+  - indicar qué cambiaste y cuándo;
+  - no agregar restricciones adicionales para quienes lo reciban.
+- **Ejecutarlo no es distribuirlo.** Usarlo internamente o en tu pipeline de CI no te obliga a publicar nada, y la aplicación que pruebas con él no se vuelve GPL.
+
+Las versiones publicadas antes del 21 de octubre de 2026 salieron con licencia MIT, y esa licencia sigue aplicando a esas copias.
+
 ## Autor
 
 **Cristian Guerra** · Senior SDET / AI-QA · Medellín, Colombia
 [linkedin.com/in/criguex](https://www.linkedin.com/in/criguex) · [github.com/criguex](https://github.com/criguex)
-
-Publicado bajo la [licencia MIT](LICENSE).

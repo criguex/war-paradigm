@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 // Shows the hook doing its job: same JSON Claude Code sends, exit code decides.
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';

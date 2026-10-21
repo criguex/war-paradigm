@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({

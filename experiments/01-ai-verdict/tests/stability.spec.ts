@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import { test, expect } from '@playwright/test';
 import { RecordedGenerator, loadStory, resolveGenerator } from '../src/generator';
 import { evaluate } from '../src/scorer';

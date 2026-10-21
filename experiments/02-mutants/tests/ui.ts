@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import { expect, type Page } from '@playwright/test';
 
 export async function signIn(page: Page, role: string) {

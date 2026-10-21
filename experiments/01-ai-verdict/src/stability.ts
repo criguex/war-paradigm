@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import type { Report, Verdict } from './types';
 
 export type Flip = { run: number; from: Verdict; to: Verdict };

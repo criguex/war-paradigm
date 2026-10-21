@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import { CommandGenerator, RecordedGenerator, loadStory, type Generator } from './generator';
 import { evaluate } from './scorer';
 import { stability } from './stability';

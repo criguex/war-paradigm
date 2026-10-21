@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import { checkPins, validateArtifact } from './checks';
 import { GATE, criteria } from './criteria';
 import type { CriterionResult, CriterionStatus, Priority, Report, Story } from './types';

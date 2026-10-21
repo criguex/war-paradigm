@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 // A stand-in "agent" for the command adapter: reads the story from stdin, ignores it,
 // and prints the recorded run selected by RUN (1..3) from the set in FAKE_AGENT_SET.
 // Replace this with anything that turns a story into a test plan JSON.

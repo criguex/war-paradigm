@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import type { Reporter, TestCase, TestResult } from '@playwright/test/reporter';
 
 const paint = (code: number, s: string) => `\x1b[${code}m${s}\x1b[0m`;

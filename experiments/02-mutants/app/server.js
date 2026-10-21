@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 Cristian Guerra
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';

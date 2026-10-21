@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Cristian Guerra
 # Claude Code PreToolUse hook (matcher: Bash).
 #
 # Reads the tool call as JSON on stdin ({"tool_name":"Bash","tool_input":{"command":"..."}})
