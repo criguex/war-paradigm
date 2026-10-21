@@ -1,32 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-label="THE MUTANT LAB · I test what AI builds">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-label="WAR Paradigm · Test the tester. Mutate reality.">
   <defs>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C6FF3D" stroke-opacity="0.07" stroke-width="1"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#5FD4E6" stroke-opacity="0.06" stroke-width="1"/>
     </pattern>
+    <radialGradient id="halo" cx="0.11" cy="0.5" r="0.32">
+      <stop offset="0" stop-color="#5FD4E6" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#5FD4E6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  <rect width="1280" height="400" fill="#0E1116"/>
+  <rect width="1280" height="400" fill="#07090C"/>
   <rect width="1280" height="400" fill="url(#grid)"/>
+  <rect width="1280" height="400" fill="url(#halo)"/>
 
-  <!-- mark -->
-  <rect x="80" y="128" width="104" height="104" rx="26" fill="#C6FF3D"/>
-  <text x="132" y="197" text-anchor="middle" font-family="'Archivo Black','Arial Black',Helvetica,Arial,sans-serif" font-weight="900" font-size="46" fill="#0E1116">ML</text>
-
-  <!-- wordmark -->
-  <text x="216" y="178" font-family="'Archivo Black','Arial Black',Helvetica,Arial,sans-serif" font-weight="900" font-size="50" letter-spacing="1" fill="#EDEFF3">THE MUTANT LAB</text>
-  <text x="218" y="230" font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-weight="700" font-size="28" fill="#C6FF3D">I test what AI builds</text>
-  <text x="220" y="282" font-family="'JetBrains Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="1.2" fill="#8B95A7">PLAYWRIGHT · TYPESCRIPT · MUTANT SCENARIOS · LLM VERDICTS</text>
-
-  <!-- scoreboard -->
-  <rect x="884" y="92" width="316" height="216" rx="18" fill="#07090D" stroke="#2E3543"/>
-  <circle cx="908" cy="116" r="5" fill="#2A3545"/><circle cx="926" cy="116" r="5" fill="#2A3545"/><circle cx="944" cy="116" r="5" fill="#2A3545"/>
-  <g font-family="'JetBrains Mono',Menlo,Consolas,monospace" font-size="16">
-    <text x="908" y="158" fill="#EDEFF3" font-weight="700">MUTANT SCOREBOARD</text>
-    <text x="908" y="192" fill="#C6FF3D">✓ killed    role-swap</text>
-    <text x="908" y="218" fill="#C6FF3D">✓ killed    reorder</text>
-    <text x="908" y="244" fill="#FF5C7A">✘ SURVIVED  self-grant</text>
-    <text x="908" y="284" fill="#8B95A7">5/6 killed · <tspan fill="#FF5C7A">1 survived</tspan></text>
+  <g filter="url(#glow)" fill="none" stroke="#5FD4E6" stroke-width="3" stroke-linejoin="round">
+    <polygon points="140,124 205.8,162 205.8,238 140,276 74.2,238 74.2,162"/>
+    <polyline points="74.2,162 140,200 205.8,162"/>
+    <line x1="140" y1="200" x2="140" y2="276"/>
   </g>
+  <circle cx="168" cy="226" r="7" fill="#FF9A62" filter="url(#glow)"/>
 
-  <!-- accent -->
-  <rect x="0" y="392" width="160" height="8" fill="#C6FF3D"/>
+  <text x="262" y="182" font-family="'Archivo Black','Arial Black',Helvetica,Arial,sans-serif" font-weight="900" font-size="58" letter-spacing="1" fill="#E6EFF3"><tspan fill="#5FD4E6">WAR</tspan> PARADIGM</text>
+  <text x="264" y="234" font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-weight="700" font-size="28" fill="#E6EFF3">Test the tester. Mutate reality.</text>
+  <text x="266" y="284" font-family="'JetBrains Mono',Menlo,Consolas,monospace" font-size="15" letter-spacing="1.2" fill="#7F93A1">PHYSICAL SIMULATIONS · FUNCTIONAL FLOWS · AI VERDICTS</text>
+
+  <rect x="884" y="80" width="316" height="240" rx="18" fill="#0B1015" stroke="#1F3440"/>
+  <circle cx="908" cy="104" r="5" fill="#1F3440"/><circle cx="926" cy="104" r="5" fill="#1F3440"/><circle cx="944" cy="104" r="5" fill="#1F3440"/>
+  <g font-family="'JetBrains Mono',Menlo,Consolas,monospace" font-size="16">
+    <text x="908" y="144" fill="#E6EFF3" font-weight="700">WAR SCOREBOARD</text>
+    <text x="908" y="180" fill="#5FD4E6">✓ killed<tspan x="1026">snell-swap</tspan></text>
+    <text x="908" y="206" fill="#5FD4E6">✓ killed<tspan x="1026">cooling-rate</tspan></text>
+    <text x="908" y="232" fill="#5FD4E6">✓ killed<tspan x="1026">role-swap</tspan></text>
+    <text x="908" y="258" fill="#FF9A62">✘ SURVIVED<tspan x="1026">self-grant</tspan></text>
+  </g>
+  <text x="908" y="296" font-family="'JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#7F93A1">a silent guard is a failed guard</text>
+
+  <rect x="0" y="392" width="160" height="8" fill="#5FD4E6"/>
 </svg>

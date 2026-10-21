@@ -1,5 +1,7 @@
 # Experiment #01 · AI output changes every run. Your verdict can't.
 
+> Part of [WAR Paradigm](../../README.md) · Track 2, functionality. The guard under test: **the judge (oracles and a scorer for AI output)**.
+
 **Specimen:** an agent that writes a test plan for a user story. Same input, three runs, three different outputs. So, did it pass?
 
 There is no single "expected result" for what an agent produces. This experiment splits the problem in two and makes the verdict repeatable.

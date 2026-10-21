@@ -1,8 +1,8 @@
 {
-  "name": "mutant-lab",
+  "name": "war-paradigm",
   "version": "1.0.0",
   "private": true,
-  "description": "THE MUTANT LAB · I test what AI builds. Runnable experiments in AI-era QA.",
+  "description": "WAR Paradigm · Test the tester: break reality on purpose (a physical law, a step of a flow, an AI answer) and check whether the checks notice.",
   "type": "module",
   "workspaces": [
     "experiments/01-ai-verdict",

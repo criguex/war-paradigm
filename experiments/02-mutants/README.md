@@ -1,5 +1,7 @@
 # Experiment #02 · Your suite is green. Would it notice if the app broke?
 
+> Part of [WAR Paradigm](../../README.md) · Track 2, functionality. The guard under test: **the suite (a green Playwright golden flow)**.
+
 **Specimen:** a golden flow with every happy-path test passing. Login → create → approve → publish. All green.
 
 A passing suite proves the happy path works. It says nothing about whether your checks would catch a wrong role, a missing field or a step done out of order. So: take the golden flow, change exactly ONE step, and the app must reject it. If it doesn't, the mutant *survived*, and that is either a bug or a gap in your checks. Either way, a finding.

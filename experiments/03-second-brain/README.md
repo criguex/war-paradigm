@@ -1,5 +1,7 @@
 # Experiment #03 · AI without context writes generic tests.
 
+> Part of [WAR Paradigm](../../README.md) · Track 2, functionality. The guard under test: **the guard rail (a Claude Code hook)**.
+
 **Specimen:** an AI assistant asked to write Playwright tests for a flow it has never seen. Clean code, correct syntax, tests nothing that matters.
 
 The fix wasn't a better prompt. What worked was giving the assistant the same knowledge a senior QA carries in their head, written down in one place it reads before every task, and moving the rules that must never be broken out of the prompt and into a hook.
