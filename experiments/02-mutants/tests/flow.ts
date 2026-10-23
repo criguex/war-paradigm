@@ -6,6 +6,7 @@ export type Role = 'viewer' | 'editor' | 'approver' | 'admin';
 export type Step = 'create' | 'approve' | 'publish' | 'grant';
 
 export type Mutant = {
+  id: string;
   name: string;
   step: Step;
   expect: number;
@@ -13,7 +14,7 @@ export type Mutant = {
   body?: Record<string, unknown>;
   ttl?: number;
   order?: Step[];
-  /** Set when the mutant is a KNOWN survivor (an open finding). Keeps CI green without hiding it. */
+  postcondition?: { kind: 'member-role'; role: Role };
   known?: string;
 };
 

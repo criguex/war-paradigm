@@ -70,7 +70,7 @@ Two questions, two oracles. *Does it run as specified?* is deterministic: schema
 
 #### 02 · Mutant scenarios
 
-A tiny web app with a golden flow (login → create → approve → publish) and a green Playwright suite. Mutants are data: one line each, one change to the flow, and the app must reject it. Five get killed. One survives and reveals a real authorization bug in the demo app: a user can grant themself a higher role. CI stays green **and** honest: the survivor is declared as a known finding, printed in red on every run, and the day the bug is fixed the test forces you to remove the flag. A larger, real-world example of the same engine: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
+A tiny web app with a golden flow (login → create → approve → publish) and a Playwright suite. Mutants are data: one change to the flow each, and the run classifies the HTTP result as evidence. Baseline and reset failures are kept out of the mutant score, a known finding is annotated only after an accepted mutation is actually observed, and every scenario attaches a JSON record with the source revision and input hashes. Five mutants are killed. One self-grant mutation survives and exposes a real authorization bug in the demo app: a user can grant themself a higher role. A larger, real-world example of the same engine: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
 
 #### 03 · Second brain
 

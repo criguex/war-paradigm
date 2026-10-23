@@ -6,10 +6,11 @@
   "type": "module",
   "scripts": {
     "app": "node app/server.js",
-    "test": "playwright test",
+    "test": "npm run test:unit && playwright test",
+    "test:unit": "node --import tsx --test tests/unit/scenario-evidence.test.ts",
     "test:golden": "playwright test golden",
-    "test:mutants": "playwright test mutants",
-    "test:strict": "MUTANT_LAB_STRICT=1 playwright test mutants",
+    "test:mutants": "npm run test:unit && playwright test tests/mutants.spec.ts",
+    "test:strict": "MUTANT_LAB_STRICT=1 npm run test:mutants",
     "evidence": "playwright test --config=playwright.evidence.config.ts",
     "report": "playwright show-report"
   },

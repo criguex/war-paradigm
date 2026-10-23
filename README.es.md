@@ -70,7 +70,7 @@ Dos preguntas, dos oráculos. *¿Funciona como se especificó?* es determinista:
 
 #### 02 · Escenarios mutantes
 
-Una app web pequeña con un flujo dorado (login → crear → aprobar → publicar) y una suite de Playwright en verde. Los mutantes son datos: una línea cada uno, un cambio en el flujo, y la app debe rechazarlo. Cinco mueren. Uno sobrevive y revela un bug real de autorización en la app de demostración: un usuario puede darse a sí mismo un rol más alto. El CI queda en verde **y** honesto: el sobreviviente se declara como hallazgo conocido, se imprime en rojo en cada corrida, y el día que se arregle el bug la prueba obliga a quitar la marca. Un ejemplo más grande y real del mismo motor: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
+Una app web pequeña con un flujo dorado (login → crear → aprobar → publicar) y una suite de Playwright. Los mutantes son datos: un cambio en el flujo cada uno, y la corrida clasifica la respuesta HTTP como evidencia. Las fallas del flujo base y del reinicio quedan fuera del puntaje de mutantes, un hallazgo conocido solo se anota después de observar que la mutación fue aceptada, y cada escenario adjunta un registro JSON con la revisión del código y los hashes de las entradas. Cinco mutantes mueren. Uno, la autoasignación de rol, sobrevive y revela un bug real de autorización en la app de demostración: un usuario puede darse a sí mismo un rol más alto. Un ejemplo más grande y real del mismo motor: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
 
 #### 03 · Segundo cerebro
 

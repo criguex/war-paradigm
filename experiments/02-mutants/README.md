@@ -4,7 +4,7 @@
 
 **Specimen:** a golden flow with every happy-path test passing. Login → create → approve → publish. All green.
 
-A passing suite proves the happy path works. It says nothing about whether your checks would catch a wrong role, a missing field or a step done out of order. So: take the golden flow, change exactly ONE step, and the app must reject it. If it doesn't, the mutant *survived*, and that is either a bug or a gap in your checks. Either way, a finding.
+A passing suite proves the happy path works. It says nothing about whether your checks would catch a wrong role, a missing field or a step done out of order. So: take the golden flow, change exactly ONE step, and the app must reject it. A recorded 2xx means the mutant *survived*. A failed reset, login or unmutated baseline is not a mutant result and is excluded from the score.
 
 ## Run it
 
@@ -29,31 +29,29 @@ Users: `viewer@demo.io`, `editor@demo.io`, `approver@demo.io`, `admin@demo.io`.
   ✓  boundary: expect 422
   ✘  self-grant: expect 403
 
-  MUTANT SCOREBOARD
-  ✓ killed    role-swap    rejected with 403
-  ✓ killed    drop-input   rejected with 422
-  ✓ killed    reorder      rejected with 409
-  ✓ killed    stale-token  rejected with 401
-  ✓ killed    boundary     rejected with 422
-  ✘ SURVIVED  self-grant   (known finding) got 200, expected 403 · privilege escalation — ...
+  MUTANT SCENARIO EVIDENCE
+  KILLED            role-swap    Expected rejection HTTP 403 observed.
+  KILLED            drop-input   Expected rejection HTTP 422 observed.
+  KILLED            reorder      Expected rejection HTTP 409 observed.
+  KILLED            stale-token  Expected rejection HTTP 401 observed.
+  KILLED            boundary     Expected rejection HTTP 422 observed.
+  KNOWN SURVIVOR    self-grant   Mutation was accepted with HTTP 200.
 
-  5/6 mutants killed · 1 survived (1 known, tracked as open finding)
+  5/6 scored mutants killed · 1 survived · 0 excluded from score
+  JSON evidence: test-results/mutant-evidence.json
 ```
 
-Five mutants killed, one survived, and the run still exits 0. That is deliberate, see below.
+Five mutants are killed and one known mutation survives. That finding is kept visible without hiding baseline or infrastructure failures.
 
 ## Mutants are data, not scripts
 
-[`tests/mutants.spec.ts`](tests/mutants.spec.ts): one line per mutant, one test that loops over them and replays the golden flow ([`tests/flow.ts`](tests/flow.ts)) through Playwright's `APIRequestContext`, mutating exactly one step.
+[`tests/scenarios.ts`](tests/scenarios.ts) defines one contract per mutant. [`tests/mutants.spec.ts`](tests/mutants.spec.ts) executes each contract through [`tests/scenario-runner.ts`](tests/scenario-runner.ts), which gates reset, login and unmutated baseline steps before mutating exactly one step.
 
 ```ts
 const mutants: Mutant[] = [
-  { name: 'role-swap',   expect: 403, step: 'approve', as: 'viewer' },
-  { name: 'drop-input',  expect: 422, step: 'create',  body: { owner: undefined } },
-  { name: 'reorder',     expect: 409, step: 'publish', order: ['create', 'publish'] },
-  { name: 'stale-token', expect: 401, step: 'approve', ttl: 0 },
-  { name: 'boundary',    expect: 422, step: 'create',  body: { title: 'x'.repeat(81) } },
-  { name: 'self-grant',  expect: 403, step: 'grant',   order: ['grant'], body: { role: 'admin' }, known: '...' },
+  { id: 'role-swap', name: 'role-swap', expect: 403, step: 'approve', as: 'viewer' },
+  { id: 'self-grant', name: 'self-grant', expect: 403, step: 'grant', order: ['grant'], body: { role: 'admin' },
+    postcondition: { kind: 'member-role', role: 'editor' }, known: '...' },
 ];
 ```
 
@@ -75,13 +73,13 @@ Browser reproduction (recorded on video, slowed down):
 npm run evidence        # tests/evidence/self-grant.spec.ts → test-results/**/video.webm
 ```
 
-### Why CI is green with a survivor, and why that is honest
+### Evidence, classification and score gate
 
-The `self-grant` mutant carries a `known:` field. While it is set, the test is marked with Playwright's `test.fail()` and an annotation, so:
+The JSON report records each scenario id, expected and observed HTTP status, phase, reason, Git revision and SHA-256 hashes for the app, scenario, runner, test and lockfile inputs. The run is deterministic and records `randomSeed: null` because it does not use random generation. A known finding receives Playwright's expected-failure marker and annotation only after an accepted mutation is observed; reset, login, baseline and runner failures cannot be hidden as known survivors.
 
-- the run **exits 0** and CI stays green;
-- the scoreboard still prints the mutant in red as `SURVIVED (known finding)` on every run, so nobody forgets it;
-- `MUTANT_LAB_STRICT=1 npm run test:mutants` (or `npm run test:strict`) ignores the flag and turns the run red, for the day you want the survivor to block a release.
+Only `KILLED` and `SURVIVED` count toward the score. An unexpected 5xx or mismatched rejection is `INCONCLUSIVE`; failed preconditions are `INVALID_BASELINE`; request/runner failures and tests without attached evidence are `INFRA_ERROR`. Those outcomes stay visible but are excluded from the score. A known survivor keeps the default run green and is printed in red. `MUTANT_LAB_STRICT=1 npm run test:mutants` makes an actual known survivor fail the run.
+
+The current oracle is HTTP-level, plus a read-only member-role check for `self-grant`. A passing response or matching status does not prove semantic equivalence, so the runner does not emit `EQUIVALENT` or claim global state invariants.
 
 ### Kill it yourself
 
@@ -91,17 +89,21 @@ Fix the rule in `app/server.js` so only admins can change roles:
 editMember: (actor) => actor.role === 'admin',
 ```
 
-Run `npm run test:mutants` again. Now the mutant gets `403`, the scoreboard shows `! FIXED self-grant`, and Playwright reports the test as *"expected to fail but passed"*, which makes the run fail on purpose: the flag no longer describes reality. Delete the `known:` line and the suite is 6/6 killed and green for the right reason.
+Run `npm run test:mutants` again. Now the mutant gets `403`, the scoreboard shows `FIXED self-grant`, and the JSON includes the observed member role. Remove the `known:` field after the finding is closed.
 
 ## Layout
 
 ```
 app/                         tiny web app + JSON API (plain node, no DB)
 tests/golden.spec.ts         happy-path E2E in the browser
-tests/mutants.spec.ts        mutants as data, replayed API-first
-tests/flow.ts                golden flow definition + login/runStep helpers
+tests/scenarios.ts           scenario contracts and known-finding description
+tests/mutants.spec.ts        Playwright adapter for scenario evidence
+tests/scenario-runner.ts     reset, login, baseline gate and single mutation
+tests/scenario-evidence.ts   conservative result classifier and provenance
+tests/flow.ts                golden flow definition + runStep helper
 tests/ui.ts                  browser helpers (signIn, signOut, createDoc)
-tests/mutant-reporter.ts     custom reporter: MUTANT SCOREBOARD (killed / SURVIVED / known / FIXED)
+tests/mutant-reporter.ts     scoreboard + test-results/mutant-evidence.json
+tests/unit/                  unit tests for status and gate classification
 tests/evidence/              browser reproduction of the survivor (excluded from the default run)
 playwright.config.ts         webServer boots app/server.js on :4310
 playwright.evidence.config.ts same, with slowMo + video for the evidence run
