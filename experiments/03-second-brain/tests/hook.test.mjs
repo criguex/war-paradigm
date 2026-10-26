@@ -61,6 +61,10 @@ describe('blocks a push to main/master', () => {
   test('chained after other commands', () => blocked('npm test && git push origin main', onFeature));
   test('chained with ;', () => blocked('git add -A; git commit -m x; git push origin main', onFeature));
   test('git -C <dir> push', () => blocked('git -C /tmp/some-repo push origin main', onFeature));
+  test('git -c key=value push', () => blocked('git -c core.x=y push origin main', onFeature));
+  test('git --no-pager push', () => blocked('git --no-pager push origin main', onFeature));
+  test('git --git-dir <dir> push', () => blocked('git --git-dir /tmp/r/.git push origin main', onFeature));
+  test('git --work-tree=<dir> -c k=v push', () => blocked('git --work-tree=/tmp/r -c a.b=c push origin master', onFeature));
 });
 
 describe('lets everything else through', () => {
@@ -71,6 +75,7 @@ describe('lets everything else through', () => {
   test('`git push origin HEAD` on a feature branch', () => allowed('git push origin HEAD', onFeature));
   test('git pull from main is fine', () => allowed('git pull origin main', onFeature));
   test('git status', () => allowed('git status', onMain));
+  test('git -c key=value push to a feature branch', () => allowed('git -c core.x=y push origin feature/mutants', onMain));
   test('unrelated command mentioning main', () => allowed('echo "main branch is protected"', onMain));
   test('npm test', () => allowed('npm test', onMain));
 });

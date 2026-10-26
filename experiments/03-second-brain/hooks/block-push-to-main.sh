@@ -12,6 +12,7 @@
 # A prompt can be ignored. This can't.
 
 PROTECTED='^(main|master)$'
+GIT_OPTS='([[:space:]]+(-[Cc]|--git-dir|--work-tree|--namespace|--config-env)[[:space:]]+[^[:space:]]+|[[:space:]]+-[^[:space:]]+)*'
 
 input="$(cat)"
 [ -z "$input" ] && exit 0
@@ -41,9 +42,10 @@ block() {
 
 # --- 2. look at every simple command in the line (a && b ; c | d) ---
 while IFS= read -r segment; do
-  [[ "$segment" =~ (^|[[:space:]])git([[:space:]]+-C[[:space:]]+[^[:space:]]+)?[[:space:]]+push([[:space:]]|$) ]] || continue
+  push_re="(^|[[:space:]])git${GIT_OPTS}[[:space:]]+push([[:space:]]|$)"
+  [[ "$segment" =~ $push_re ]] || continue
 
-  after="$(printf '%s' "$segment" | sed -E 's/^.*(^|[[:space:]])git([[:space:]]+-C[[:space:]]+[^[:space:]]+)?[[:space:]]+push([[:space:]]+|$)//')"
+  after="$(printf '%s' "$segment" | sed -E "s/^.*(^|[[:space:]])git${GIT_OPTS}[[:space:]]+push([[:space:]]+|\$)//")"
   read -ra tokens <<< "$after"
 
   remote=""
