@@ -4,9 +4,9 @@
 
 <p align="center">
   <a href="https://github.com/criguex/war-paradigm/actions/workflows/ci.yml"><img src="https://github.com/criguex/war-paradigm/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/Playwright-1.63-2EAD33?logo=playwright&logoColor=white" alt="Playwright 1.63">
-  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-55DFBD" alt="GPL-3.0"></a>
+  <img src="https://img.shields.io/badge/Playwright-1.63-2EAD33?logo=playwright&logoColor=white&style=flat-square" alt="Playwright 1.63">
+  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white&style=flat-square" alt="TypeScript">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-55DFBD?style=flat-square&labelColor=071B2B" alt="GPL-3.0"></a>
 </p>
 
 # WAR Paradigm
