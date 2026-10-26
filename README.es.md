@@ -13,6 +13,35 @@
 
 **No probamos el software. Probamos al que prueba.** · [Read in English](README.md)
 
+## Explicado para un niño de 8 años
+
+Las pruebas son como guardias cuyo trabajo es gritar cuando algo está mal. Pero un guardia que nunca grita puede ser excelente, o puede estar dormido. Para saberlo, rompemos algo a propósito (una regla de la física en una simulación, o un paso de una aplicación) y miramos al guardia. Si grita, la trampa quedó atrapada: **KILLED**. Si se queda callado, el guardia tiene un punto ciego: **SURVIVED**, y ese es el hallazgo.
+
+<p align="center">
+  <img src="docs/assets/explained.gif" width="720" alt="Historia ilustrada: todas las pruebas del flujo dorado están en verde; un usuario de solo lectura intenta aprobar y el guardia dice 403, killed; un editor se vuelve admin mientras el guardia duerme, survived; el marcador muestra 5 killed y 1 survived">
+</p>
+
+### Un ejemplo real (experimento 02)
+
+- **Imagina** una aplicación pequeña donde la gente inicia sesión, crea una publicación, alguien la aprueba y se publica. Todas las pruebas están en verde.
+- **Rompemos un paso a propósito:** un usuario que solo puede mirar intenta aprobar. La app responde 403, "no tienes permiso". La trampa quedó atrapada: KILLED.
+- **Otra trampa:** un editor se cambia su propio rol a admin. La app dice que sí (HTTP 200), así que ese editor podría aprobar y publicar solo. Todas las pruebas del camino feliz estaban en verde mientras esto seguía abierto.
+- **Qué ganamos:** 5 de 6 trampas quedaron atrapadas, y la que se escapó es un bug real de autorización en la app de demostración. Sigue impreso en rojo hasta que alguien lo arregle.
+
+### Palabras difíciles
+
+| Palabra | Qué significa |
+|---|---|
+| **Suite de pruebas** | Todas las revisiones de un programa, juntas. |
+| **Mutante** | Una copia del mundo con exactamente una cosa rota a propósito. |
+| **Oráculo** | La hoja de respuestas que dice cuál es el resultado correcto. |
+| **KILLED** | Las pruebas atraparon lo que se rompió. Buena noticia. |
+| **SURVIVED** | Las pruebas no lo vieron: un bug real o un punto ciego. |
+| **Flujo dorado** | El camino normal que siempre debe funcionar: login → crear → aprobar → publicar. |
+| **403** | La forma en que la app dice "no tienes permiso". |
+
+## La idea
+
 Toda suite de pruebas, oráculo, verificador de pruebas formales o juez de IA es un guardia que debería gritar cuando algo está mal. Un guardia que nunca grita puede ser excelente, o puede estar dormido. WAR Paradigm es la forma de saberlo: construir un mundo donde sabes exactamente qué está mal, porque lo rompiste a propósito, y ver si el guardia lo nota.
 
 - Rompe una ley física dentro de una simulación. ¿El oráculo lo nota?
@@ -94,6 +123,7 @@ war-paradigm/
 │   ├── 02-mutants/         app web en node + flujo dorado en Playwright + mutantes como datos + reporter de marcador
 │   └── 03-second-brain/    plantilla de vault de Obsidian + hook de Claude Code + suite de node:test
 ├── assets/                 marca
+├── docs/                   animación explicada (docs/assets) y su fuente (docs/scenes)
 └── .github/workflows/      un job corre todos los experimentos
 ```
 

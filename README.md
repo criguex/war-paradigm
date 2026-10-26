@@ -13,6 +13,35 @@
 
 **Don't test the software. Test the tester.** · [Leer en español](README.es.md)
 
+## Explained like you're 8
+
+Tests are like guards whose job is to shout when something is wrong. But a guard who never shouts might be great, or might be asleep. To find out, we break something on purpose (a rule of physics in a simulation, or one step in an app) and watch the guard. If it shouts, the trap was caught: **KILLED**. If it stays quiet, the guard has a blind spot: **SURVIVED**, and that is the finding.
+
+<p align="center">
+  <img src="docs/assets/explained.gif" width="720" alt="Illustrated story: every test of the golden flow is green; a viewer tries to approve and the guard says 403, killed; an editor makes themself admin while the guard sleeps, survived; the scoreboard shows 5 killed and 1 survived">
+</p>
+
+### A real example (experiment 02)
+
+- **Imagine** a small app where people log in, create a post, someone approves it and it gets published. All the tests are green.
+- **We break one step on purpose:** a viewer, who is only allowed to look, tries to approve. The app answers 403, "you are not allowed". The trap was caught: KILLED.
+- **Another trap:** an editor changes their own role to admin. The app says yes (HTTP 200), so that editor could approve and publish alone. Every happy-path test was green while this was open.
+- **What we gain:** 5 of 6 traps were caught, and the one that slipped is a real authorization bug in the demo app. It stays printed in red until someone fixes it.
+
+### Hard words
+
+| Word | What it means |
+|---|---|
+| **Test suite** | All the checks for a program, together. |
+| **Mutant** | A copy of the world with exactly one thing broken on purpose. |
+| **Oracle** | The answer key that says what the right result is. |
+| **KILLED** | The checks caught the broken thing. Good news. |
+| **SURVIVED** | The checks missed it: a real bug or a blind spot. |
+| **Golden flow** | The normal path that must always work: login → create → approve → publish. |
+| **403** | The app's way of saying "you are not allowed". |
+
+## The idea
+
 Every test suite, oracle, proof checker or AI judge is a guard that is supposed to shout when something is wrong. A guard that never shouts might be excellent, or it might be asleep. WAR Paradigm is how you tell the difference: build a world where you know exactly what is wrong, because you broke it on purpose, and check whether the guard notices.
 
 - Break a law of physics inside a simulation. Does the oracle notice?
@@ -94,6 +123,7 @@ war-paradigm/
 │   ├── 02-mutants/         node web app + Playwright golden flow + mutants as data + scoreboard reporter
 │   └── 03-second-brain/    Obsidian vault template + Claude Code hook + node:test suite
 ├── assets/                 brand
+├── docs/                   explained animation (docs/assets) and its source (docs/scenes)
 └── .github/workflows/      one job runs every experiment
 ```
 
