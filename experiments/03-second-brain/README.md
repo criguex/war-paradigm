@@ -77,7 +77,7 @@ To use it in your own project: copy `.claude/settings.json` and `hooks/` to the 
 vault/                       the Obsidian template (14 notes)
 .claude/settings.json        the PreToolUse hook registration
 hooks/block-push-to-main.sh  the hook
-tests/hook.test.mjs          28 cases: blocks / allows / robustness / parser fallbacks
+tests/hook.test.mjs          33 cases: blocks / allows / robustness / parser fallbacks
 tests/vault-links.test.mjs   links resolve, frontmatter present, no islands
 tests/demo.mjs               npm run demo
 ```
