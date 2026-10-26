@@ -20,6 +20,7 @@ Rules:
 
 - A forbidden role always gets `403`, before any validation (`422`) or state (`409`) check.
 - Nobody changes their own role. The current implementation breaks this rule, see [[DEF-001 self-grant role]].
+- A viewer never creates a draft. The current implementation breaks this rule too: `POST /api/docs` has no role check, and the `viewer-create` mutant survives with `201`.
 - Expired or missing tokens get `401` on every protected call.
 
 Used by [[DocFlow - golden flow]] and [[Test strategy]].

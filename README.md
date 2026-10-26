@@ -18,7 +18,7 @@
 Tests are like guards whose job is to shout when something is wrong. But a guard who never shouts might be great, or might be asleep. To find out, we break something on purpose (a rule of physics in a simulation, or one step in an app) and watch the guard. If it shouts, the trap was caught: **KILLED**. If it stays quiet, the guard has a blind spot: **SURVIVED**, and that is the finding.
 
 <p align="center">
-  <img src="docs/assets/explained.gif" width="720" alt="Illustrated story: every test of the golden flow is green; a viewer tries to approve and the guard says 403, killed; an editor makes themself admin while the guard sleeps, survived; the scoreboard shows 5 killed and 1 survived">
+  <img src="docs/assets/explained.gif" width="720" alt="Illustrated story: every test of the golden flow is green; a viewer tries to approve and the guard says 403, killed; an editor makes themself admin while the guard sleeps, survived; the scoreboard shows 5 killed and 2 survived">
 </p>
 
 ### A real example (experiment 02)
@@ -26,7 +26,8 @@ Tests are like guards whose job is to shout when something is wrong. But a guard
 - **Imagine** a small app where people log in, create a post, someone approves it and it gets published. All the tests are green.
 - **We break one step on purpose:** a viewer, who is only allowed to look, tries to approve. The app answers 403, "you are not allowed". The trap was caught: KILLED.
 - **Another trap:** an editor changes their own role to admin. The app says yes (HTTP 200), so that editor could approve and publish alone. Every happy-path test was green while this was open.
-- **What we gain:** 5 of 6 traps were caught, and the one that slipped is a real authorization bug in the demo app. It stays printed in red until someone fixes it.
+- **A trap we added while preparing the course:** a viewer creates a draft. The roles table says 403; the app says yes (HTTP 201). The WAR Paradigm found a hole in its own example app.
+- **What we gain:** 5 of 7 traps were caught, and the two that slipped are real authorization bugs in the demo app. They stay printed in red until someone fixes them.
 
 ### Hard words
 
@@ -99,7 +100,7 @@ Two questions, two oracles. *Does it run as specified?* is deterministic: schema
 
 #### 02 · Mutant scenarios
 
-A tiny web app with a golden flow (login → create → approve → publish) and a Playwright suite. Mutants are data: one change to the flow each, and the run classifies the HTTP result as evidence. Baseline and reset failures are kept out of the mutant score, a known finding is annotated only after an accepted mutation is actually observed, and every scenario attaches a JSON record with the source revision and input hashes. Five mutants are killed. One self-grant mutation survives and exposes a real authorization bug in the demo app: a user can grant themself a higher role. A larger, real-world example of the same engine: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
+A tiny web app with a golden flow (login → create → approve → publish) and a Playwright suite. Mutants are data: one change to the flow each, and the run classifies the HTTP result as evidence. Baseline and reset failures are kept out of the mutant score, a known finding is annotated only after an accepted mutation is actually observed, and every scenario attaches a JSON record with the source revision and input hashes. Five mutants are killed. Two survive and expose real authorization bugs in the demo app: with self-grant a user can grant themself a higher role, and with viewer-create (found while preparing the course) a viewer can create drafts. A larger, real-world example of the same engine: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
 
 #### 03 · Second brain
 

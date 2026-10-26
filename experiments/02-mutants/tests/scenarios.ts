@@ -13,4 +13,8 @@ export const mutants: Mutant[] = [
     body: { role: 'admin' }, postcondition: { kind: 'member-role', role: 'editor' },
     known: 'privilege escalation — POST /api/members/:id/role lets a user change their own role',
   },
+  {
+    id: 'viewer-create', name: 'viewer-create', expect: 403, step: 'create', as: 'viewer',
+    known: 'viewer can create drafts — POST /api/docs has no role check (the vault matrix says 403); found while preparing the course',
+  },
 ];

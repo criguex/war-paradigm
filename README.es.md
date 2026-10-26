@@ -18,7 +18,7 @@
 Las pruebas son como guardias cuyo trabajo es gritar cuando algo está mal. Pero un guardia que nunca grita puede ser excelente, o puede estar dormido. Para saberlo, rompemos algo a propósito (una regla de la física en una simulación, o un paso de una aplicación) y miramos al guardia. Si grita, la trampa quedó atrapada: **KILLED**. Si se queda callado, el guardia tiene un punto ciego: **SURVIVED**, y ese es el hallazgo.
 
 <p align="center">
-  <img src="docs/assets/explained.gif" width="720" alt="Historia ilustrada: todas las pruebas del flujo dorado están en verde; un usuario de solo lectura intenta aprobar y el guardia dice 403, killed; un editor se vuelve admin mientras el guardia duerme, survived; el marcador muestra 5 killed y 1 survived">
+  <img src="docs/assets/explained.gif" width="720" alt="Historia ilustrada: todas las pruebas del flujo dorado están en verde; un usuario de solo lectura intenta aprobar y el guardia dice 403, killed; un editor se vuelve admin mientras el guardia duerme, survived; el marcador muestra 5 killed y 2 survived">
 </p>
 
 ### Un ejemplo real (experimento 02)
@@ -26,7 +26,8 @@ Las pruebas son como guardias cuyo trabajo es gritar cuando algo está mal. Pero
 - **Imagina** una aplicación pequeña donde la gente inicia sesión, crea una publicación, alguien la aprueba y se publica. Todas las pruebas están en verde.
 - **Rompemos un paso a propósito:** un usuario que solo puede mirar intenta aprobar. La app responde 403, "no tienes permiso". La trampa quedó atrapada: KILLED.
 - **Otra trampa:** un editor se cambia su propio rol a admin. La app dice que sí (HTTP 200), así que ese editor podría aprobar y publicar solo. Todas las pruebas del camino feliz estaban en verde mientras esto seguía abierto.
-- **Qué ganamos:** 5 de 6 trampas quedaron atrapadas, y la que se escapó es un bug real de autorización en la app de demostración. Sigue impreso en rojo hasta que alguien lo arregle.
+- **Una trampa que agregamos al preparar el curso:** un usuario de solo lectura crea un borrador. La tabla de roles dice 403; la app dice que sí (HTTP 201). El WAR Paradigm encontró un hueco en su propia app de ejemplo.
+- **Qué ganamos:** 5 de 7 trampas quedaron atrapadas, y las dos que se escaparon son bugs reales de autorización en la app de demostración. Siguen impresas en rojo hasta que alguien los arregle.
 
 ### Palabras difíciles
 
@@ -99,7 +100,7 @@ Dos preguntas, dos oráculos. *¿Funciona como se especificó?* es determinista:
 
 #### 02 · Escenarios mutantes
 
-Una app web pequeña con un flujo dorado (login → crear → aprobar → publicar) y una suite de Playwright. Los mutantes son datos: un cambio en el flujo cada uno, y la corrida clasifica la respuesta HTTP como evidencia. Las fallas del flujo base y del reinicio quedan fuera del puntaje de mutantes, un hallazgo conocido solo se anota después de observar que la mutación fue aceptada, y cada escenario adjunta un registro JSON con la revisión del código y los hashes de las entradas. Cinco mutantes mueren. Uno, la autoasignación de rol, sobrevive y revela un bug real de autorización en la app de demostración: un usuario puede darse a sí mismo un rol más alto. Un ejemplo más grande y real del mismo motor: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
+Una app web pequeña con un flujo dorado (login → crear → aprobar → publicar) y una suite de Playwright. Los mutantes son datos: un cambio en el flujo cada uno, y la corrida clasifica la respuesta HTTP como evidencia. Las fallas del flujo base y del reinicio quedan fuera del puntaje de mutantes, un hallazgo conocido solo se anota después de observar que la mutación fue aceptada, y cada escenario adjunta un registro JSON con la revisión del código y los hashes de las entradas. Cinco mutantes mueren. Dos sobreviven y revelan bugs reales de autorización en la app de demostración: con self-grant un usuario puede darse a sí mismo un rol más alto, y con viewer-create (encontrado al preparar el curso) un usuario de solo lectura puede crear borradores. Un ejemplo más grande y real del mismo motor: [criguex/civica-playwright-challenge](https://github.com/criguex/civica-playwright-challenge).
 
 #### 03 · Segundo cerebro
 

@@ -27,5 +27,6 @@ Every call carries `Authorization: Bearer <token>` from `POST /api/auth/login`. 
 | stale-token | approve with an expired token | 401 | killed |
 | boundary | title of 81 characters | 422 | killed |
 | self-grant | editor sets their own role to admin | 403 | **survived** → [[DEF-001 self-grant role]] |
+| viewer-create | create a draft as viewer | 403 | **survived**, found while preparing the course: `POST /api/docs` has no role check |
 
 Roles → [[Roles and permissions]] · Data → [[Test data - users]] · Strategy → [[Test strategy]]
