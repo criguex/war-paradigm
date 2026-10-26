@@ -42,6 +42,7 @@ block() {
 
 # --- 2. look at every simple command in the line (a && b ; c | d) ---
 while IFS= read -r segment; do
+  segment="${segment//\\git/git}"
   push_re="(^|[[:space:]])git${GIT_OPTS}[[:space:]]+push([[:space:]]|$)"
   [[ "$segment" =~ $push_re ]] || continue
 

@@ -65,6 +65,16 @@ describe('blocks a push to main/master', () => {
   test('git --no-pager push', () => blocked('git --no-pager push origin main', onFeature));
   test('git --git-dir <dir> push', () => blocked('git --git-dir /tmp/r/.git push origin main', onFeature));
   test('git --work-tree=<dir> -c k=v push', () => blocked('git --work-tree=/tmp/r -c a.b=c push origin master', onFeature));
+  test('\\git push (skips shell aliases)', () => blocked('\\git push origin main', onFeature));
+});
+
+describe('known limits: these get through', () => {
+  test('branch in a variable', () => allowed('B=main; git push origin $B', onFeature));
+  test('subcommand in a variable', () => allowed('G=push; git $G origin main', onFeature));
+  test('git alias for push', () => allowed('git -c alias.p=push p origin main', onFeature));
+  test('sh -c', () => allowed("sh -c 'git push origin main'", onFeature));
+  test('bash -c', () => allowed('bash -c "git push origin main"', onFeature));
+  test('eval', () => allowed('eval "git push origin main"', onFeature));
 });
 
 describe('lets everything else through', () => {

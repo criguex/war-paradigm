@@ -9,7 +9,7 @@ The fix wasn't a better prompt. What worked was giving the assistant the same kn
 ## Run it
 
 ```bash
-npm test        # 33 checks: the hook blocks/allows correctly + the vault is consistent
+npm test        # 45 checks: 40 hook cases (blocks, allows, known limits) + 5 vault checks
 npm run demo    # the hook in action against six commands
 ```
 
@@ -67,7 +67,22 @@ $ git push -u origin feature/mutants      ✓ allowed (exit 0)
 $ git pull origin main                    ✓ allowed (exit 0)
 ```
 
-It handles explicit branches, refspecs (`HEAD:main`, `feature:master`, `refs/heads/main`), force flags, chained commands (`a && git push ...`), `git -C <dir> push`, and the bare `git push` / `git push origin` by resolving the current branch. It parses the JSON with `jq`, falls back to `node`, then to `sed`. [`tests/hook.test.mjs`](tests/hook.test.mjs) proves each case against real temporary git repos, on `main` and on a feature branch, for all three parsers.
+It handles explicit branches, refspecs (`HEAD:main`, `feature:master`, `refs/heads/main`), force flags, chained commands (`a && git push ...`), git global options (`git -C <dir> push`, `git -c k=v push`, `git --no-pager push`), `\git push`, and the bare `git push` / `git push origin` by resolving the current branch. It parses the JSON with `jq`, falls back to `node`, then to `sed`. [`tests/hook.test.mjs`](tests/hook.test.mjs) proves each case against real temporary git repos, on `main` and on a feature branch, for all three parsers.
+
+### Known limits: these get through
+
+A hook built on regular expressions is a barrier against mistakes, not a sandbox. It reads the command as text and does not run a shell, so these pushes to `main` still get through with exit 0:
+
+```
+$ B=main; git push origin $B              ✓ exit 0   the branch is in a variable
+$ G=push; git $G origin main              ✓ exit 0   the subcommand is in a variable
+$ git -c alias.p=push p origin main       ✓ exit 0   a git alias for push
+$ sh -c 'git push origin main'            ✓ exit 0   a nested shell
+$ bash -c "git push origin main"          ✓ exit 0   a nested shell
+$ eval "git push origin main"             ✓ exit 0   eval
+```
+
+Each one has a test under `known limits: these get through` that asserts the current exit 0. If someone closes one, that test fails on purpose: move the case to the blocking tests and update this list. `\git push origin main` used to be on it; it was trivial to close and is now blocked. The real backstop for `main` is branch protection on the server.
 
 To use it in your own project: copy `.claude/settings.json` and `hooks/` to the project root, `chmod +x hooks/block-push-to-main.sh`, done. Claude Code runs the hook before every Bash call.
 
@@ -77,7 +92,7 @@ To use it in your own project: copy `.claude/settings.json` and `hooks/` to the 
 vault/                       the Obsidian template (14 notes)
 .claude/settings.json        the PreToolUse hook registration
 hooks/block-push-to-main.sh  the hook
-tests/hook.test.mjs          33 cases: blocks / allows / robustness / parser fallbacks
+tests/hook.test.mjs          40 cases: blocks / allows / known limits / robustness / parser fallbacks
 tests/vault-links.test.mjs   links resolve, frontmatter present, no islands
 tests/demo.mjs               npm run demo
 ```

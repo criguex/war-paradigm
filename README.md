@@ -104,7 +104,7 @@ A tiny web app with a golden flow (login → create → approve → publish) and
 
 #### 03 · Second brain
 
-An Obsidian vault template for AI-assisted QA: a `READ FIRST` map, golden rules, five predictable folders, notes that answer one question each and link to the rest. Plus the part a prompt cannot do: a Claude Code `PreToolUse` hook that blocks any `git push` to `main` with exit 2. The guard is tested the WAR way: 33 cases, including chained commands, git global options like `-c` and `--no-pager` and the bare `git push` on `main`, try to sneak past it. A link checker keeps the vault consistent.
+An Obsidian vault template for AI-assisted QA: a `READ FIRST` map, golden rules, five predictable folders, notes that answer one question each and link to the rest. Plus the part a prompt cannot do: a Claude Code `PreToolUse` hook that blocks any `git push` to `main` with exit 2. The guard is tested the WAR way: 40 cases, including chained commands, git global options like `-c` and `--no-pager` and the bare `git push` on `main`, try to sneak past it. Six known limits still get through with exit 0 (a branch or subcommand in a variable, a git alias, `sh -c`, `bash -c`, `eval`) and are pinned by tests: a regex hook is a barrier against mistakes, not a sandbox. A link checker keeps the vault consistent.
 
 ## Why
 

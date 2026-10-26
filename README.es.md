@@ -104,7 +104,7 @@ Una app web pequeña con un flujo dorado (login → crear → aprobar → public
 
 #### 03 · Segundo cerebro
 
-Una plantilla de vault de Obsidian para QA asistido por IA: un mapa `READ FIRST`, reglas de oro, cinco carpetas predecibles y notas que responden una pregunta cada una y enlazan al resto. Y la parte que un prompt no puede hacer: un hook `PreToolUse` de Claude Code que bloquea cualquier `git push` a `main` con exit 2. La barrera se prueba al estilo WAR: 33 casos, incluidos comandos encadenados, opciones globales de git como `-c` y `--no-pager` y el `git push` a secas sobre `main`, intentan colarse. Un verificador de enlaces mantiene el vault consistente.
+Una plantilla de vault de Obsidian para QA asistido por IA: un mapa `READ FIRST`, reglas de oro, cinco carpetas predecibles y notas que responden una pregunta cada una y enlazan al resto. Y la parte que un prompt no puede hacer: un hook `PreToolUse` de Claude Code que bloquea cualquier `git push` a `main` con exit 2. La barrera se prueba al estilo WAR: 40 casos, incluidos comandos encadenados, opciones globales de git como `-c` y `--no-pager` y el `git push` a secas sobre `main`, intentan colarse. Seis límites conocidos todavía pasan con exit 0 (rama o subcomando en una variable, un alias de git, `sh -c`, `bash -c`, `eval`) y quedan fijados con pruebas: un hook con regex es una barrera contra errores, no un sandbox. Un verificador de enlaces mantiene el vault consistente.
 
 ## Por qué
 
