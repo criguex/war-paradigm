@@ -130,6 +130,16 @@ war-paradigm/
 
 Per-experiment commands are documented in each folder's README. Root shortcuts: `npm run test:01`, `test:02`, `test:03`, `demo:01`, `demo:02`, `demo:03`, `typecheck`.
 
+## Skills
+
+The method also ships as an agent skill, so an AI coding agent applies it the same way you would: [`skills/war-mutantes`](skills/war-mutantes/SKILL.md). It walks the four steps on the three guards of this repo, with the real commands, the rule that the prediction is committed before the run, and the rule that a survivor is published as it is.
+
+- [`SKILL.md`](skills/war-mutantes/SKILL.md): the procedure and the `Mutant` contract of experiment 02.
+- [`catalogo.md`](skills/war-mutantes/catalogo.md): mutation operators already run here, with their observed result, plus ideas not run yet.
+- [`plantilla-fila-war.md`](skills/war-mutantes/plantilla-fila-war.md): the WAR row to fill for each mutation.
+
+Claude Code picks it up from `.claude/skills/`; other agents can read `skills/war-mutantes/SKILL.md` directly. New operators join the catalog only after they have been run.
+
 ## Commercial services
 
 The code is open. What I sell is the experience of applying it to real, complex systems:

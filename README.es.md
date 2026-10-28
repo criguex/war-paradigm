@@ -130,6 +130,16 @@ war-paradigm/
 
 Los comandos de cada experimento están en el README de su carpeta. Atajos en la raíz: `npm run test:01`, `test:02`, `test:03`, `demo:01`, `demo:02`, `demo:03`, `typecheck`.
 
+## Skills
+
+El método también viene como skill para agentes, así un agente de IA lo aplica igual que lo harías tú: [`skills/war-mutantes`](skills/war-mutantes/SKILL.md). Recorre los cuatro pasos sobre los tres guardias de este repo, con los comandos reales, la regla de que la predicción se commitea antes de correr y la regla de que el sobreviviente se publica tal cual.
+
+- [`SKILL.md`](skills/war-mutantes/SKILL.md): el procedimiento y el contrato `Mutant` del experimento 02.
+- [`catalogo.md`](skills/war-mutantes/catalogo.md): operadores de mutación ya corridos aquí, con su resultado observado, y las ideas que aún no se han corrido.
+- [`plantilla-fila-war.md`](skills/war-mutantes/plantilla-fila-war.md): la fila WAR que se llena por cada mutación.
+
+Claude Code la encuentra en `.claude/skills/`; otros agentes pueden leer `skills/war-mutantes/SKILL.md` directamente. Un operador nuevo entra al catálogo solo después de correrlo.
+
 ## Servicios comerciales
 
 El código es abierto. Lo que vendo es la experiencia de aplicarlo en sistemas reales y complejos:
